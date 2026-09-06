@@ -10,110 +10,80 @@
 <body>
   <div class="viewport">
 
-    <!-- 1. Left: Immediate Presence -->
-    <section class="col presence-col">
-      <header class="col-header">
-        <span id="today-date-str" class="col-tag">-- --, ----</span>
-        <button id="btn-settings" class="ghost-dot" title="Settings (Hotkey: S)">·</button>
-      </header>
+    <!-- 1. Ambient Meta Header (Top Periphery) -->
+    <header class="ambient-header">
+      <div class="header-left">
+        <span class="brand-title">Every Second Counts</span>
+        <span class="header-meta">•</span>
+        <span id="today-date-str" class="header-meta">-- --, ----</span>
+      </div>
+      <div class="header-right">
+        <span id="horizon-expectancy-label" class="header-meta">Horizon: 80 Years</span>
+        <button id="btn-settings" class="ghost-dot" title="Settings (Hotkey: S, Zen: Z)">·</button>
+      </div>
+    </header>
 
-      <div class="hero-wrap">
-        <div class="hero-row">
-          <span id="hero-age-int" class="age-int">00</span>
-          <span id="hero-age-dec" class="age-dec">.00000000</span>
-        </div>
-        <div class="hero-caption">years alive</div>
+    <!-- 2. Hero Center Stage (Primary Focal Point: 60% Visual Mass) -->
+    <main class="hero-stage">
+      <div class="hero-number-group">
+        <span id="hero-age-int" class="age-int">00</span>
+        <span id="hero-age-dec" class="age-dec">.00000000</span>
+        <span class="living-cursor" title="Heartbeat of Time"></span>
+      </div>
+      <div class="hero-subtitle">years of life elapsed</div>
+
+      <!-- Integrated Life Tapestry -->
+      <div class="tapestry-frame">
+        <canvas id="life-canvas"></canvas>
+        <div id="tapestry-tooltip" class="canvas-tooltip" hidden></div>
+      </div>
+    </main>
+
+    <!-- 3. Grounded Telemetry Baseline (Lower Tier: 30% Visual Mass) -->
+    <footer class="telemetry-row">
+      <!-- Immediate Day Scale -->
+      <div class="telemetry-block">
+        <div class="block-tag">Today's Window</div>
+        <div id="today-countdown" class="block-val-hero">00:00:00</div>
+        <div class="block-sub">There will never be another <span id="quote-date" style="color: var(--fg);">today</span>.</div>
       </div>
 
-      <div class="temporal-blocks">
-        <!-- Day Scale -->
-        <div class="scale-card">
-          <div class="scale-title">Today Remaining</div>
-          <div id="today-countdown" class="scale-val">00:00:00</div>
-          <div class="scale-note">There will never be another <span id="quote-date" style="color: var(--fg);">today</span>.</div>
-        </div>
-
-        <!-- Year Scale -->
-        <div class="scale-card">
-          <div class="scale-title">Year Cycle</div>
-          <div id="year-days-left" class="scale-val">0 days left</div>
-          <div id="year-pct-text" class="scale-note">0% of 2026 has elapsed</div>
-          <div class="scale-bar-track">
-            <div id="year-bar" class="scale-bar-fill" style="width: 0%;"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2. Center: Finite Life Perspective -->
-    <section class="col perspective-col">
-      <header class="col-header">
-        <span class="col-tag">HORIZON</span>
-        <span id="horizon-expectancy-label" class="col-sub">If you reach 80</span>
-      </header>
-
-      <div class="perspective-grid">
-        <div class="metric-tile">
-          <div id="stat-weeks-left" class="metric-num">0</div>
-          <div class="metric-label">Weeks Left</div>
-          <div id="stat-weeks-lived" class="metric-sub">0 lived</div>
-        </div>
-
-        <div class="metric-tile">
-          <div id="stat-summers-left" class="metric-num">0</div>
-          <div class="metric-label">Summers Left</div>
-          <div class="metric-sub">warm seasons</div>
-        </div>
-
-        <div class="metric-tile">
-          <div id="stat-weekends-left" class="metric-num">0</div>
-          <div class="metric-label">Weekends Left</div>
-          <div class="metric-sub">free Saturdays</div>
-        </div>
-
-        <div class="metric-tile">
-          <div id="stat-waking-hours" class="metric-num">0</div>
-          <div class="metric-label">Waking Hours</div>
-          <div class="metric-sub">conscious life (16h/d)</div>
-        </div>
-      </div>
-
-      <div class="horizon-progress-box">
-        <div class="progress-header">
-          <span>JOURNEY ELAPSED</span>
-          <span id="stat-pct-lived">0.0%</span>
+      <!-- Lifetime Horizon Scale -->
+      <div class="telemetry-block">
+        <div class="block-tag">Remaining Lifespan</div>
+        <div class="block-val-hero">
+          <span id="stat-weeks-left">0</span><span class="block-unit">weeks left</span>
         </div>
         <div class="horizon-track">
           <div id="horizon-bar" class="horizon-fill" style="width: 0%;"></div>
         </div>
-        <div class="progress-footer">
-          <span id="stat-days-lived-text">0 days lived</span>
-          <span id="stat-days-left-text">0 days remaining</span>
+        <div class="block-sub">
+          <span id="stat-weeks-lived">0</span> weeks lived • <span id="stat-pct-lived">0.0%</span> of journey elapsed
         </div>
       </div>
 
-      <blockquote class="stoic-reminder">
-        "You are not given a short life, but you make it short by wasting it."
-      </blockquote>
-    </section>
-
-    <!-- 3. Right: Dense 52-Week Life Tapestry -->
-    <section class="col tapestry-col">
-      <header class="col-header">
-        <span class="col-tag">LIFE IN WEEKS</span>
-        <span class="col-sub">52 col × 80 row</span>
-      </header>
-
-      <div class="canvas-wrapper">
-        <canvas id="life-canvas"></canvas>
+      <!-- Tangible Finite Realities -->
+      <div class="telemetry-block">
+        <div class="block-tag">Tangible Realities</div>
+        <div class="tangible-metrics">
+          <div class="tangible-item">
+            <span id="stat-summers-left" class="tangible-number">0</span>
+            <span class="tangible-desc">Summers</span>
+          </div>
+          <div class="tangible-item">
+            <span id="stat-weekends-left" class="tangible-number">0</span>
+            <span class="tangible-desc">Weekends</span>
+          </div>
+          <div class="tangible-item">
+            <span id="stat-waking-hours" class="tangible-number">0</span>
+            <span class="tangible-desc">Waking Hrs</span>
+          </div>
+        </div>
+        <div class="block-sub" style="font-style: italic;">
+          "Life is long if you know how to use it."
+        </div>
       </div>
-
-      <div class="tapestry-legend">
-        <div class="legend-item"><span class="legend-dot legend-lived"></span><span>Lived</span></div>
-        <div class="legend-item"><span class="legend-dot legend-now"></span><span>Now</span></div>
-        <div class="legend-item"><span class="legend-dot legend-left"></span><span>Unlived</span></div>
-      </div>
-    </section>
+    </footer>
 
   </div>
 
