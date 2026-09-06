@@ -1,0 +1,9 @@
+{
+  "manifest_version": 3,
+  "name": "Every Second Counts",
+  "version": "1.0.0",
+  "description": "Minimalist real-time age and life telemetry for your new tab.",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  }
+}

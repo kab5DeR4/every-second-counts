@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Every Second Counts</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Top Header Bar -->
+    <header class="top-bar">
+      <div class="brand">
+        <span class="brand-badge">EVERY SECOND COUNTS</span>
+        <span class="brand-sub">CHRONO TELEMETRY</span>
+      </div>
+      <div class="live-clock">
+        <span id="header-date">-- --- ----</span>
+        <span class="clock-sep">/</span>
+        <span id="header-time">00:00:00</span>
+      </div>
+    </header>
+
+    <!-- Setup View (shown only if no birthdate stored) -->
+    <section id="setup-view" class="view">
+      <div class="setup-card">
+        <div class="setup-tag">// EVERY SECOND COUNTS</div>
+        <h1 class="setup-title">SET YOUR BIRTH DATE</h1>
+        <p class="setup-desc">Input your exact birth timestamp to unlock live chronological metrics and telemetry.</p>
+        
+        <form id="setup-form" class="setup-form">
+          <div class="input-wrapper">
+            <label for="birth-input">BIRTH DATE & TIME</label>
+            <input
+              type="datetime-local"
+              id="birth-input"
+              required
+              aria-label="Birth date and time"
+            />
+          </div>
+          <button type="submit" id="save-btn" class="primary-btn">INITIALIZE COUNTER &rarr;</button>
+        </form>
+        <p id="setup-error" class="error-msg" hidden>Birth date cannot be in the future</p>
+      </div>
+    </section>
+
+    <!-- Main Tracker Dashboard View -->
+    <section id="tracker-view" class="view hidden">
+      <div class="dashboard-container">
+        
+        <!-- Hero Age Display Section -->
+        <div class="hero-section">
+          <div class="hero-header">
+            <span class="status-indicator"></span>
+            <span class="hero-label">CURRENT AGE TELEMETRY</span>
+          </div>
+
+          <div class="age-main-wrapper">
+            <div class="age-display" aria-label="Real time age">
+              <span id="age-integer">00</span><span class="dot">.</span><span id="age-fraction">00000000</span>
+            </div>
+            <span class="age-unit">YEARS OLD</span>
+          </div>
+
+          <!-- Year Progress Bar -->
+          <div class="progress-module">
+            <div class="progress-info">
+              <span id="progress-label">PROGRESS TOWARDS AGE --</span>
+              <span id="progress-percent">00.00%</span>
+            </div>
+            <div class="progress-track">
+              <div id="progress-bar-fill" class="progress-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Grid Panels -->
+        <div class="metrics-grid">
+          <!-- Card 1: Days & Hours Lived -->
+          <div class="metric-card">
+            <span class="card-tag">01 / TIME ELAPSED</span>
+            <div class="card-main-val">
+              <span id="days-count">0</span>
+              <span class="val-unit">DAYS</span>
+            </div>
+            <div class="card-secondary-val">
+              <span id="hours-count">0</span>
+              <span class="sub-unit">HOURS LIVED</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Next Birthday Countdown -->
+          <div class="metric-card">
+            <span class="card-tag">02 / NEXT MILESTONE</span>
+            <div class="card-main-val" id="countdown-val">
+              --d --h --m --s
+            </div>
+            <div class="card-secondary-val">
+              <span id="next-age-label">TURNING AGE --</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Life in Weeks (80-year horizon) -->
+          <div class="metric-card">
+            <span class="card-tag">03 / PERSPECTIVE (80Y)</span>
+            <div class="card-main-val">
+              <span id="weeks-count">0</span>
+              <span class="val-unit">WEEKS</span>
+            </div>
+            <div class="card-secondary-val">
+              <span id="life-percent">0.0%</span>
+              <span class="sub-unit">OF 4,174 WEEKS</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Biological Estimates -->
+          <div class="metric-card">
+            <span class="card-tag">04 / BIO ESTIMATES</span>
+            <div class="card-main-val">
+              <span id="heartbeats-count">~0</span>
+              <span class="val-unit">BEATS</span>
+            </div>
+            <div class="card-secondary-val">
+              <span id="breaths-count">~0</span>
+              <span class="sub-unit">BREATHS TAKEN</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily Focus / Intent Bar -->
+        <div class="focus-bar">
+          <span class="focus-tag">DAILY FOCUS:</span>
+          <input
+            type="text"
+            id="focus-input"
+            class="focus-input"
+            placeholder="Type your priority for today and press Enter..."
+            maxlength="80"
+            aria-label="Daily focus goal"
+          />
+        </div>
+
+      </div>
+
+      <!-- Bottom Toolbar -->
+      <footer class="bottom-bar">
+        <div class="footer-left">
+          <span class="constant-badge">TROPICAL CONSTANT 365.242199 D/YR</span>
+        </div>
+        <div class="footer-right">
+          <button id="edit-btn" class="action-link" title="Change birth date">EDIT DATE</button>
+          <span class="footer-sep">•</span>
+          <button id="reset-btn" class="action-link" title="Reset all saved data">RESET</button>
+        </div>
+      </footer>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
