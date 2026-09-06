@@ -1,9 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "Every Second Counts",
-  "version": "1.0.0",
-  "description": "Minimalist real-time age and life telemetry for your new tab.",
+  "name": "LIFE / IN MOTION",
+  "version": "2.0.0",
+  "description": "An experimental digital instrument and life telemetry new tab experience.",
   "chrome_url_overrides": {
     "newtab": "index.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "life-in-motion@experimental.instrument",
+      "strict_min_version": "109.0"
+    }
   }
 }
