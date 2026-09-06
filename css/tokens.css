@@ -2,10 +2,10 @@
   --bg: #000000;
   --panel-bg: #09090b;
   --fg: #ffffff;
-  --fg-muted: #a1a1aa;
-  --fg-dim: #52525b;
-  --fg-faint: #27272a;
-  --hairline: rgba(255, 255, 255, 0.08);
+  --fg-muted: #e4e4e7;   /* Crisp bright off-white */
+  --fg-dim: #a1a1aa;     /* Readable clear silver */
+  --fg-faint: #71717a;   /* Visible slate gray */
+  --hairline: rgba(255, 255, 255, 0.14);
   --accent: #ffffff;
   
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Helvetica Neue", Arial, sans-serif;
