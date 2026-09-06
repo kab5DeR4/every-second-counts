@@ -19,11 +19,23 @@
       </div>
       <div class="header-right">
         <span id="horizon-expectancy-label" class="header-meta">Horizon: 80 Years</span>
-        <button id="btn-settings" class="ghost-dot" title="Settings (Hotkey: S, Zen: Z)">·</button>
+        <button id="btn-settings" class="ghost-dot" title="Settings (Hotkey: S, Search: /, Zen: Z)">·</button>
       </div>
     </header>
 
-    <!-- 2. Hero Center Stage (Primary Focal Point: 60% Visual Mass) -->
+    <!-- 2. Central Familiar Search Bar -->
+    <div class="search-container">
+      <form id="search-form" action="https://www.google.com/search" method="GET" class="search-form">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="search-input" name="q" class="search-input" placeholder="Search Google or enter address..." autocomplete="off" />
+        <span class="search-badge">/</span>
+      </form>
+    </div>
+
+    <!-- 3. Hero Center Stage (Primary Focal Point: 60% Visual Mass) -->
     <main class="hero-stage">
       <div class="hero-number-group">
         <span id="hero-age-int" class="age-int">00</span>
@@ -39,7 +51,7 @@
       </div>
     </main>
 
-    <!-- 3. Grounded Telemetry Baseline (Lower Tier: 30% Visual Mass) -->
+    <!-- 4. Grounded Telemetry Baseline (Lower Tier: 30% Visual Mass) -->
     <footer class="telemetry-row">
       <!-- Immediate Day Scale -->
       <div class="telemetry-block">

@@ -21,6 +21,10 @@ const UI = {
   canvas: document.getElementById("life-canvas"),
   tooltip: document.getElementById("tapestry-tooltip"),
 
+  // Search Bar
+  searchInput: document.getElementById("search-input"),
+
+  // Settings
   btnSettings: document.getElementById("btn-settings"),
   modal: document.getElementById("settings-modal"),
   form: document.getElementById("settings-form"),
@@ -60,14 +64,31 @@ function init() {
     saveSettings();
   });
 
-  // Hotkey listeners: S = settings, Z = zen mode, Esc = close modal
+  // Hotkey listeners:
+  // '/' = focus search bar
+  // 'S' = settings
+  // 'Z' = zen mode
+  // 'Esc' = blur search or close modal
   window.addEventListener("keydown", (e) => {
-    if (e.key === "s" || e.key === "S") {
+    const isInputActive = document.activeElement && 
+      (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA");
+
+    if (e.key === "/" && !isInputActive && UI.modal.hidden) {
+      e.preventDefault();
+      if (UI.searchInput) {
+        UI.searchInput.focus();
+        UI.searchInput.select();
+      }
+    } else if ((e.key === "s" || e.key === "S") && !isInputActive) {
       if (UI.modal.hidden) showSettings();
-    } else if (e.key === "z" || e.key === "Z") {
+    } else if ((e.key === "z" || e.key === "Z") && !isInputActive) {
       toggleZenMode();
     } else if (e.key === "Escape") {
-      if (!UI.modal.hidden && Storage.getBirthTimestamp()) hideSettings();
+      if (document.activeElement === UI.searchInput) {
+        UI.searchInput.blur();
+      } else if (!UI.modal.hidden && Storage.getBirthTimestamp()) {
+        hideSettings();
+      }
     }
   });
 
@@ -76,7 +97,7 @@ function init() {
     document.body.classList.remove("idle-awareness");
     clearTimeout(idleTimer);
     idleTimer = setTimeout(() => {
-      if (!isZenMode && UI.modal.hidden) {
+      if (!isZenMode && UI.modal.hidden && document.activeElement !== UI.searchInput) {
         document.body.classList.add("idle-awareness");
       }
     }, 15000);
