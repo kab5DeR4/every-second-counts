@@ -3,257 +3,138 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LIFE / IN MOTION</title>
+  <title>Every Second Counts</title>
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/instrument.css" />
 </head>
 <body>
-  <!-- High performance generative canvas -->
-  <canvas id="instrument-canvas" aria-label="Generative life visualization"></canvas>
+  <div class="viewport">
 
-  <!-- Instrument HUD shell -->
-  <div class="hud-shell">
-    <!-- Top Bar -->
-    <header class="top-bar">
-      <div class="brand-block">
-        <span class="brand-dot"></span>
-        <span class="brand-title">LIFE / IN MOTION</span>
-        <span class="brand-version">INSTRUMENT V2.0</span>
+    <!-- 1. Left: Immediate Presence -->
+    <section class="col presence-col">
+      <header class="col-header">
+        <span id="today-date-str" class="col-tag">-- --, ----</span>
+        <button id="btn-settings" class="ghost-dot" title="Settings (Hotkey: S)">·</button>
+      </header>
+
+      <div class="hero-wrap">
+        <div class="hero-row">
+          <span id="hero-age-int" class="age-int">00</span>
+          <span id="hero-age-dec" class="age-dec">.00000000</span>
+        </div>
+        <div class="hero-caption">years alive</div>
       </div>
-      <div class="top-telemetry">
-        <span id="clock-date" class="clock-date">-- --- ----</span>
-        <div class="clock-time-group">
-          <span id="clock-time">00:00:00</span>
-          <span id="clock-millis" class="clock-millis">.000</span>
+
+      <div class="temporal-blocks">
+        <!-- Day Scale -->
+        <div class="scale-card">
+          <div class="scale-title">Today Remaining</div>
+          <div id="today-countdown" class="scale-val">00:00:00</div>
+          <div class="scale-note">There will never be another <span id="quote-date" style="color: var(--fg);">today</span>.</div>
+        </div>
+
+        <!-- Year Scale -->
+        <div class="scale-card">
+          <div class="scale-title">Year Cycle</div>
+          <div id="year-days-left" class="scale-val">0 days left</div>
+          <div id="year-pct-text" class="scale-note">0% of 2026 has elapsed</div>
+          <div class="scale-bar-track">
+            <div id="year-bar" class="scale-bar-fill" style="width: 0%;"></div>
+          </div>
         </div>
       </div>
-    </header>
+    </section>
 
-    <!-- Central Hero Readout -->
-    <main class="hero-telemetry">
-      <div class="scale-badge">
-        <span id="active-scale-label">SCALE: LIFE (MACRO)</span>
-      </div>
-      <div class="primary-readout" aria-label="Current age in tropical years">
-        <span id="age-int">00</span><span class="readout-dot">.</span><span id="age-dec" class="readout-dec">00000000</span>
-      </div>
-      <div class="sub-telemetry">
-        <span class="sub-item"><strong id="sub-days">0</strong> DAYS</span>
-        <span class="sub-sep">•</span>
-        <span class="sub-item"><strong id="sub-day-percent">0.0%</strong> TODAY</span>
-        <span class="sub-sep">•</span>
-        <span class="sub-item"><strong id="sub-life-percent">0.0%</strong> LIFE</span>
-      </div>
-    </main>
+    <!-- 2. Center: Finite Life Perspective -->
+    <section class="col perspective-col">
+      <header class="col-header">
+        <span class="col-tag">HORIZON</span>
+        <span id="horizon-expectancy-label" class="col-sub">If you reach 80</span>
+      </header>
 
-    <!-- Right-side Life Zoom Scrubber -->
-    <aside class="scale-scrubber-wrap" aria-label="Time scale scrubber">
-      <span class="scrubber-title">LIFE ZOOM</span>
-      <div class="scale-steps">
-        <button class="scale-step-btn active" data-scale="LIFE">LIFE</button>
-        <button class="scale-step-btn" data-scale="YEARS">YEARS</button>
-        <button class="scale-step-btn" data-scale="MONTHS">MONTHS</button>
-        <button class="scale-step-btn" data-scale="DAYS">DAYS</button>
-        <button class="scale-step-btn" data-scale="HOURS">HOURS</button>
-        <button class="scale-step-btn" data-scale="NOW">NOW</button>
-      </div>
-    </aside>
+      <div class="perspective-grid">
+        <div class="metric-tile">
+          <div id="stat-weeks-left" class="metric-num">0</div>
+          <div class="metric-label">Weeks Left</div>
+          <div id="stat-weeks-lived" class="metric-sub">0 lived</div>
+        </div>
 
-    <!-- Bottom Controls Bar -->
-    <footer class="bottom-bar">
-      <nav class="mode-selector" aria-label="Visualization mode selector">
-        <button class="mode-btn active" data-mode="field">01 FIELD</button>
-        <button class="mode-btn" data-mode="ribbon">02 RIBBON</button>
-        <button class="mode-btn" data-mode="orbit">03 ORBIT</button>
-      </nav>
-      <div class="utility-controls">
-        <button id="finite-btn" class="action-btn" title="Toggle Finite Mode (Hotkey: F)">FINITE</button>
-        <button id="quick-memory-btn" class="action-btn" title="Add Memory Marker (Hotkey: M)">+ MEMORY</button>
-        <button id="settings-trigger-btn" class="action-btn" title="Open Settings & Calibration (Hotkey: S)">SETTINGS</button>
+        <div class="metric-tile">
+          <div id="stat-summers-left" class="metric-num">0</div>
+          <div class="metric-label">Summers Left</div>
+          <div class="metric-sub">warm seasons</div>
+        </div>
+
+        <div class="metric-tile">
+          <div id="stat-weekends-left" class="metric-num">0</div>
+          <div class="metric-label">Weekends Left</div>
+          <div class="metric-sub">free Saturdays</div>
+        </div>
+
+        <div class="metric-tile">
+          <div id="stat-waking-hours" class="metric-num">0</div>
+          <div class="metric-label">Waking Hours</div>
+          <div class="metric-sub">conscious life (16h/d)</div>
+        </div>
       </div>
-    </footer>
+
+      <div class="horizon-progress-box">
+        <div class="progress-header">
+          <span>JOURNEY ELAPSED</span>
+          <span id="stat-pct-lived">0.0%</span>
+        </div>
+        <div class="horizon-track">
+          <div id="horizon-bar" class="horizon-fill" style="width: 0%;"></div>
+        </div>
+        <div class="progress-footer">
+          <span id="stat-days-lived-text">0 days lived</span>
+          <span id="stat-days-left-text">0 days remaining</span>
+        </div>
+      </div>
+
+      <blockquote class="stoic-reminder">
+        "You are not given a short life, but you make it short by wasting it."
+      </blockquote>
+    </section>
+
+    <!-- 3. Right: Dense 52-Week Life Tapestry -->
+    <section class="col tapestry-col">
+      <header class="col-header">
+        <span class="col-tag">LIFE IN WEEKS</span>
+        <span class="col-sub">52 col × 80 row</span>
+      </header>
+
+      <div class="canvas-wrapper">
+        <canvas id="life-canvas"></canvas>
+      </div>
+
+      <div class="tapestry-legend">
+        <div class="legend-item"><span class="legend-dot legend-lived"></span><span>Lived</span></div>
+        <div class="legend-item"><span class="legend-dot legend-now"></span><span>Now</span></div>
+        <div class="legend-item"><span class="legend-dot legend-left"></span><span>Unlived</span></div>
+      </div>
+    </section>
+
   </div>
 
-  <!-- Hover Inspection Tooltip -->
-  <div id="canvas-tooltip" class="canvas-tooltip" role="tooltip" aria-hidden="true">
-    <div id="tooltip-primary" class="tooltip-primary"></div>
-    <div id="tooltip-sub" class="tooltip-sub"></div>
-    <div id="tooltip-memory" class="tooltip-memory"></div>
-  </div>
+  <!-- Settings Dialog -->
+  <div id="settings-modal" hidden>
+    <div class="settings-content">
+      <h3 class="settings-title">Calibration</h3>
+      <form id="settings-form">
+        <label for="input-birth">Date & Time of Birth</label>
+        <input type="datetime-local" id="input-birth" required />
 
-  <!-- Quick Pin Modal (when clicking on a dot) -->
-  <div id="quick-pin-modal" class="modal-overlay" role="dialog" aria-modal="true" hidden>
-    <div class="quick-pin-card">
-      <div class="quick-pin-header">
-        <span class="modal-tag">// PIN MEMORY</span>
-        <button id="quick-pin-close" class="close-icon-btn">&times;</button>
-      </div>
-      <div id="quick-pin-date-label" class="quick-pin-sub">--</div>
-      <form id="quick-pin-form">
-        <input type="text" id="quick-pin-text" class="clean-input" placeholder="What happened in this moment?" maxlength="80" required autofocus autocomplete="off" />
-        <div class="quick-pin-actions">
-          <button type="button" id="quick-pin-cancel" class="btn-secondary-sm">CANCEL</button>
-          <button type="submit" class="btn-primary-sm">RECORD &rarr;</button>
+        <label for="input-life">Estimated Lifespan (Years)</label>
+        <input type="number" id="input-life" min="40" max="120" value="80" required />
+
+        <div class="settings-actions">
+          <button type="button" id="btn-close" class="btn">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
         </div>
       </form>
     </div>
   </div>
-
-  <!-- Fullscreen Initial Setup / Calibration View -->
-  <section id="setup-overlay" class="fullscreen-setup-overlay" aria-label="Instrument Calibration">
-    <div class="setup-container">
-      <!-- Left Configuration Column -->
-      <div class="setup-form-column">
-        <span class="setup-header-badge">// TEMPORAL CALIBRATION</span>
-        <h1 class="setup-heading">WHEN DID YOUR CLOCK START?</h1>
-        <p class="setup-subtext">
-          Calibrate your birth timestamp and lifespan model. The instrument calculates continuous life velocity across cosmological and microsecond scales.
-        </p>
-
-        <form id="setup-form" class="setup-inputs-grid">
-          <div class="input-group">
-            <label for="setup-birth-input" class="input-label">BIRTH DATE & TIME</label>
-            <input type="datetime-local" id="setup-birth-input" class="clean-input" required />
-          </div>
-
-          <div class="lifespan-slider-box">
-            <div class="slider-header">
-              <span>EXPECTED LIFESPAN</span>
-              <span><strong id="setup-lifespan-num">80</strong> YEARS</span>
-            </div>
-            <input type="range" id="setup-lifespan-slider" min="50" max="115" step="1" value="80" />
-          </div>
-
-          <p id="setup-error-msg" class="error-msg" hidden>
-            Birth date cannot be in the future.
-          </p>
-
-          <div class="setup-actions">
-            <button type="submit" class="btn-primary-large">INITIALIZE INSTRUMENT &rarr;</button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Right Live Preview Column -->
-      <div class="setup-preview-column">
-        <span class="preview-tag">// LIVE TELEMETRY PREVIEW</span>
-        <div class="preview-mini-stats">
-          <div class="mini-stat-card">
-            <span class="mini-stat-label">ELAPSED YEARS</span>
-            <span id="preview-years-val" class="mini-stat-val">0.00</span>
-          </div>
-          <div class="mini-stat-card">
-            <span class="mini-stat-label">DAYS LIVED</span>
-            <span id="preview-days-val" class="mini-stat-val">0</span>
-          </div>
-          <div class="mini-stat-card">
-            <span class="mini-stat-label">WEEKS REMAINING</span>
-            <span id="preview-weeks-rem-val" class="mini-stat-val">0</span>
-          </div>
-          <div class="mini-stat-card">
-            <span class="mini-stat-label">LIFE COMPLETED</span>
-            <span id="preview-life-pct-val" class="mini-stat-val">0.0%</span>
-          </div>
-        </div>
-
-        <div class="preview-guidance">
-          <p>● <strong>52 Columns</strong>: Each human year is precisely 52 weeks.</p>
-          <p>● <strong>100% Offline</strong>: All timestamps stay strictly in your local browser sandbox.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Slide-over Settings & Memories Drawer -->
-  <div id="drawer-backdrop" class="drawer-backdrop"></div>
-  <aside id="settings-drawer" class="slide-drawer" role="dialog" aria-modal="true" aria-label="Settings and Memories">
-    <div class="drawer-header">
-      <div class="drawer-title-group">
-        <span class="drawer-tag">// INSTRUMENT</span>
-        <h2 class="drawer-title">SETTINGS & DATA</h2>
-      </div>
-      <button id="drawer-close-btn" class="drawer-close-btn" aria-label="Close drawer">&times;</button>
-    </div>
-
-    <!-- Segmented Tab Bar -->
-    <nav class="drawer-tabs">
-      <button class="drawer-tab-btn active" data-tab="tab-calib">CALIBRATION</button>
-      <button class="drawer-tab-btn" data-tab="tab-memories">MEMORIES (<span id="drawer-mem-count">0</span>)</button>
-      <button class="drawer-tab-btn" data-tab="tab-prefs">PREFERENCES</button>
-    </nav>
-
-    <!-- Tab 1: Calibration -->
-    <div id="tab-calib" class="drawer-tab-pane active">
-      <form id="drawer-calib-form" class="drawer-form">
-        <div class="input-group">
-          <label for="drawer-birth-input" class="input-label">BIRTH DATE & TIME</label>
-          <input type="datetime-local" id="drawer-birth-input" class="clean-input" required />
-        </div>
-
-        <div class="lifespan-slider-box">
-          <div class="slider-header">
-            <span>EXPECTED LIFESPAN</span>
-            <span><strong id="drawer-lifespan-num">80</strong> YEARS</span>
-          </div>
-          <input type="range" id="drawer-lifespan-slider" min="50" max="115" step="1" value="80" />
-        </div>
-
-        <p id="drawer-error-msg" class="error-msg" hidden>
-          Birth date cannot be in the future.
-        </p>
-
-        <button type="submit" class="btn-primary-sm" style="margin-top:0.5rem;">APPLY CALIBRATION</button>
-      </form>
-    </div>
-
-    <!-- Tab 2: Memories -->
-    <div id="tab-memories" class="drawer-tab-pane">
-      <div class="drawer-section">
-        <span class="section-label">NEW TIMELINE ANNOTATION</span>
-        <form id="drawer-memory-form" class="drawer-form">
-          <div class="input-group">
-            <label for="drawer-mem-date" class="input-label">DATE</label>
-            <input type="date" id="drawer-mem-date" class="clean-input" required />
-          </div>
-          <div class="input-group">
-            <label for="drawer-mem-label" class="input-label">ANNOTATION / MOMENT</label>
-            <input type="text" id="drawer-mem-label" class="clean-input" placeholder="e.g. Graduated, Moved to Tokyo..." maxlength="80" required autocomplete="off" />
-          </div>
-          <button type="submit" class="btn-primary-sm">RECORD MOMENT</button>
-        </form>
-      </div>
-
-      <div class="drawer-section" style="margin-top:1rem;">
-        <span class="section-label">RECORDED MOMENTS</span>
-        <div id="drawer-memory-list" class="memory-list-wrap"></div>
-      </div>
-    </div>
-
-    <!-- Tab 3: Preferences & Shortcuts -->
-    <div id="tab-prefs" class="drawer-tab-pane">
-      <div class="drawer-section">
-        <span class="section-label">KEYBOARD SHORTCUTS</span>
-        <div class="keyboard-guide-list">
-          <div class="kb-row"><span class="kb-key">F</span> <span>Toggle Finite (Zen) Mode</span></div>
-          <div class="kb-row"><span class="kb-key">1</span> / <span class="kb-key">2</span> / <span class="kb-key">3</span> <span>Switch Visual Mode (Field, Ribbon, Orbit)</span></div>
-          <div class="kb-row"><span class="kb-key">M</span> <span>Open Memories</span></div>
-          <div class="kb-row"><span class="kb-key">S</span> <span>Open Settings</span></div>
-          <div class="kb-row"><span class="kb-key">Scroll / + / -</span> <span>Adjust Life Zoom</span></div>
-          <div class="kb-row"><span class="kb-key">Esc</span> <span>Close any overlay</span></div>
-        </div>
-      </div>
-
-      <div class="drawer-section" style="margin-top:1.5rem;">
-        <span class="section-label">DANGER ZONE</span>
-        <p class="drawer-subtext">Clear all local timestamps, calibrations, and saved memories.</p>
-        <button type="button" id="reset-data-btn" class="btn-danger-sm">RESET ALL DATA</button>
-      </div>
-    </div>
-
-    <div class="drawer-privacy-footer">
-      <span>● LOCAL PRIVACY: No telemetry, no cloud syncing. All timestamps stay strictly in this browser.</span>
-    </div>
-  </aside>
 
   <script type="module" src="js/app.js"></script>
 </body>

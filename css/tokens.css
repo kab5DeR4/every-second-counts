@@ -1,34 +1,13 @@
-/* design tokens for minimal scientific instrument */
 :root {
-  /* deep graphite and obsidian */
-  --bg-black: #000000;
-  --bg-surface: #060606;
-  --bg-card: #0a0a0a;
-  --bg-overlay: rgba(0, 0, 0, 0.88);
-
-  /* borders */
-  --border-dim: #121212;
-  --border-subtle: #1a1a1a;
-  --border-medium: #282828;
-  --border-bright: #444444;
-
-  /* typography */
-  --text-white: #ffffff;
-  --text-high: #eaeaea;
-  --text-mid: #888888;
-  --text-low: #444444;
-  --text-faint: #222222;
-
-  /* single restrained accent: razor red */
-  --accent: #ff3333;
-  --accent-dim: rgba(255, 51, 51, 0.15);
-  --accent-glow: rgba(255, 51, 51, 0.45);
-
-  /* fonts */
-  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
+  --bg: #000000;
+  --panel-bg: #09090b;
+  --fg: #ffffff;
+  --fg-muted: #a1a1aa;
+  --fg-dim: #52525b;
+  --fg-faint: #27272a;
+  --hairline: rgba(255, 255, 255, 0.08);
+  --accent: #ffffff;
   
-  /* transitions */
-  --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration-fast: 0.18s;
-  --duration-mid: 0.32s;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
