@@ -6,18 +6,19 @@
 
 ## ⚡ Core Philosophy & Architecture
 
-* **Zero-Scroll Single Viewport**: Everything fits cleanly in a single `100vh` frame without scrollbars or UI noise.
-* **Living Age Readout**: The integer remains steady while the 8-place decimal continuously increments at 60 FPS based on the tropical year constant (`365.242199` days/year).
-* **Horizon & Remaining Time Perspective**:
-  * **Weeks Left vs. Weeks Lived**: A direct ratio showing exactly how small the remaining block of time is.
-  * **Hairline Progress Bar**: Visualizes the fraction of your journey that has elapsed.
-  * **Days Remaining**: Real-time counter of total remaining days until your lifespan horizon.
+* **Unified Golden Ratio Viewport**: Single `100vh` frame with a commanding central stage (~60% visual mass) and lower telemetry baseline (~30% visual mass).
+* **Living Age Readout & Heartbeat Cursor**: Integer remains steady while the 8-place decimal continuously increments at 60 FPS based on the tropical year constant (`365.242199` days/year) accompanied by a 1Hz breathing heartbeat cursor.
+* **Horizon & Finite Life Perspective**:
+  * **Weeks Remaining Hero**: Dominant counter showing weeks left vs. lived, plus percentage elapsed.
+  * **Tangible Realities**: Real-time counts of remaining **summers**, **free weekends**, and **conscious waking hours** (16h/day).
+  * **Hairline Progress Bar**: Visualizes your elapsed journey.
 * **52-Week Life Tapestry**:
-  * Contemplative 52-column canvas matrix spanning your entire life.
-  * Decade markers (`0, 10, 20, 30...`) for instant spatial awareness.
-  * Past weeks rendered as soft echoes; the current week pulses as a singular bright point; future weeks stand as faint open dots.
-* **Daily Awareness**:
-  * Real-time countdown to midnight: *"There will never be another [today]."*
+  * Contemplative 52-column canvas matrix spanning your lifespan.
+  * Interactive reticle hover inspector detailing week index and age.
+  * Decade markers (`0, 10, 20, 30...`) for spatial awareness.
+* **Zen Focus Mode & Idle Awareness**:
+  * Press `Z` to instantly enter Zen Mode, leaving only the hero age and life tapestry visible.
+  * Auto-fades telemetry after 15 seconds of idle inactivity to create a quiet ambient museum display.
 * **100% Private & Offline**:
   * Stored strictly in `localStorage`. Zero analytics, tracking, or network requests.
 
@@ -27,6 +28,7 @@
 
 | Action | Control |
 | :--- | :--- |
+| **Zen Focus Mode** | Press `Z` |
 | **Settings / Calibration** | Press `S` or click `·` |
 | **Close Dialogs** | Press `Esc` |
 
