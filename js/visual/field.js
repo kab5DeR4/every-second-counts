@@ -49,9 +49,8 @@ export class LifeMatrixRenderer {
   render(snapshot) {
     const { expectedYears, breakdown } = snapshot;
 
-    // Pure obsidian background
-    this.ctx.fillStyle = "#000000";
-    this.ctx.fillRect(0, 0, this.width, this.height);
+    // Clear canvas frame before rendering
+    this.ctx.clearRect(0, 0, this.width, this.height);
 
     if (!snapshot.birthTimestamp) return;
 
