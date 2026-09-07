@@ -311,7 +311,8 @@ canvas {
   background: var(--fg-faint);
   border-radius: 2px;
   overflow: hidden;
-  margin-top: 0.65rem;
+  margin-top: 0.95rem;
+  margin-bottom: 0.75rem;
 }
 
 .horizon-fill {
