@@ -3,7 +3,7 @@
 export class LifeMatrixRenderer {
   constructor(canvasElement, onHoverCallback) {
     this.canvas = canvasElement;
-    this.ctx = this.canvas.getContext("2d", { alpha: false });
+    this.ctx = this.canvas.getContext("2d", { alpha: true });
     this.onHover = onHoverCallback;
 
     this.mousePos = { x: null, y: null };
