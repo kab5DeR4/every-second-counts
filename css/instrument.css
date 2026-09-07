@@ -94,7 +94,7 @@ html, body {
   display: flex;
   align-items: center;
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--hairline);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 28px;
   padding: 0.55rem 1.1rem;
   transition: all 0.25s ease;
