@@ -123,21 +123,23 @@ export class LifeMatrixRenderer {
       this.ctx.fill();
     }
 
-    // 4. Active Present Week
+    // 4. Active Present Week - Slow continuous breathing pulse
     const activeX = startX + currentWeekCol * stepX;
     const activeY = startY + currentYearRow * stepY;
 
     const nowMs = Date.now();
-    const secondFraction = (nowMs % 1000) / 1000;
-    const ringRadius = (dotRadius + 1.5) + (1 - secondFraction) * 3.5;
+    const breathFactor = 0.5 + 0.5 * Math.sin(nowMs * 0.002);
+    const pulseAlpha = 0.35 + breathFactor * 0.65;
+    const pulseRadius = dotRadius + 0.8 + breathFactor * 2.2;
 
-    this.ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - secondFraction) * 0.9})`;
-    this.ctx.lineWidth = 1.2;
+    // Outer subtle breathing halo
+    this.ctx.fillStyle = `rgba(255, 255, 255, ${pulseAlpha * 0.35})`;
     this.ctx.beginPath();
-    this.ctx.arc(activeX, activeY, ringRadius, 0, Math.PI * 2);
-    this.ctx.stroke();
+    this.ctx.arc(activeX, activeY, pulseRadius + 1.5, 0, Math.PI * 2);
+    this.ctx.fill();
 
-    this.ctx.fillStyle = "#ffffff";
+    // Core active week dot
+    this.ctx.fillStyle = `rgba(255, 255, 255, ${pulseAlpha})`;
     this.ctx.beginPath();
     this.ctx.arc(activeX, activeY, dotRadius + 1.0, 0, Math.PI * 2);
     this.ctx.fill();
