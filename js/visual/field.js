@@ -91,7 +91,7 @@ export class LifeMatrixRenderer {
     for (let r = 0; r <= rows; r += 10) {
       const y = startY + r * stepY;
       const isCurrentDecade = currentYearRow >= r && currentYearRow < r + 10;
-      this.ctx.fillStyle = isCurrentDecade ? "#ffffff" : "#a1a1aa";
+      this.ctx.fillStyle = isCurrentDecade ? "#ffffff" : "#d4d4d8";
       this.ctx.fillText(`${r}`, startX - 7, y);
     }
 
