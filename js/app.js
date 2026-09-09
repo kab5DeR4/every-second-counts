@@ -43,12 +43,22 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December"
 ];
 
+/**
+ * Safely parses input from <input type="datetime-local"> into a pure UTC millisecond timestamp.
+ * Appending 'Z' forces JS engines to parse in UTC, bypassing local server/client timezone offsets.
+ */
+function parseInputToUTCTimestamp(dateString) {
+  if (!dateString) return Date.now();
+  const safeIsoString = dateString.endsWith("Z") ? dateString : `${dateString}:00Z`;
+  return new Date(safeIsoString).getTime();
+}
+
 function init() {
   const birthTs = Storage.getBirthTimestamp();
   const lifeYrs = Storage.getExpectedLifespan();
 
   model = new LifespanModel(birthTs, lifeYrs);
-  
+
   renderer = new LifeMatrixRenderer(UI.canvas, (hoverPoint) => {
     handleCanvasHover(hoverPoint);
   });
@@ -64,11 +74,7 @@ function init() {
     saveSettings();
   });
 
-  // Hotkey listeners:
-  // '/' = focus search bar
-  // 'S' = settings
-  // 'Z' = zen mode
-  // 'Esc' = blur search or close modal
+  // Hotkey listeners
   window.addEventListener("keydown", (e) => {
     const isInputActive = document.activeElement && 
       (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA");
@@ -123,7 +129,7 @@ function handleCanvasHover(pt) {
 
   const status = pt.isNow ? "Present Week" : pt.isPast ? "Past Lived" : "Future Week";
   UI.tooltip.textContent = `Age ${pt.ageYear} • Week ${pt.weekNum} (${status})`;
-  
+
   UI.tooltip.style.left = `${pt.x}px`;
   UI.tooltip.hidden = false;
 }
@@ -132,7 +138,7 @@ function showSettings() {
   const ts = Storage.getBirthTimestamp();
   if (ts) {
     const d = new Date(ts);
-    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    // Format timestamp directly to UTC string for <input type="datetime-local">
     UI.inputBirth.value = d.toISOString().slice(0, 16);
   }
   UI.inputLife.value = Storage.getExpectedLifespan();
@@ -148,7 +154,9 @@ function hideSettings() {
 function saveSettings() {
   const dateStr = UI.inputBirth.value;
   if (!dateStr) return;
-  const ts = new Date(dateStr).getTime();
+
+  // Use explicit UTC parsing to keep output consistent across all host environments
+  const ts = parseInputToUTCTimestamp(dateStr);
   const yrs = parseInt(UI.inputLife.value, 10) || 80;
 
   if (ts > Date.now()) return;
