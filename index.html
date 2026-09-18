@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="css/instrument.css" />
 </head>
 <body>
+  <!-- Smooth Ambient Gradient Void (No Noise, Pure Obsidian) -->
+  <canvas id="ambient-canvas" class="ambient-canvas"></canvas>
+
   <div class="viewport">
 
     <!-- 1. Ambient Meta Header (Top Periphery) -->
@@ -23,7 +26,7 @@
       </div>
     </header>
 
-    <!-- 2. Central Familiar Search Bar -->
+    <!-- 2. Central Search Bar & Quick Launch -->
     <div class="search-container">
       <form id="search-form" action="https://www.google.com/search" method="GET" class="search-form">
         <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -33,10 +36,26 @@
         <input type="text" id="search-input" name="q" class="search-input" placeholder="Search Google or enter address..." autocomplete="off" />
         <span class="search-badge">/</span>
       </form>
+
+      <!-- Minimal Quick Access Dock -->
+      <nav class="quick-links" aria-label="Quick Access">
+        <a href="https://github.com" class="quick-link" target="_self">GitHub</a>
+        <a href="https://youtube.com" class="quick-link" target="_self">YouTube</a>
+        <a href="https://mail.google.com" class="quick-link" target="_self">Gmail</a>
+        <a href="https://reddit.com" class="quick-link" target="_self">Reddit</a>
+        <a href="https://chatgpt.com" class="quick-link" target="_self">ChatGPT</a>
+      </nav>
     </div>
 
-    <!-- 3. Hero Center Stage (Primary Focal Point: 60% Visual Mass) -->
+    <!-- 3. Hero Center Stage -->
     <main class="hero-stage">
+      <!-- Grounding 4-7-8 Zen Breathing Visualization -->
+      <div id="zen-breath-container" class="zen-breath-container" aria-hidden="true">
+        <div class="zen-breath-ring"></div>
+        <div class="zen-breath-aura"></div>
+        <div id="zen-breath-label" class="zen-breath-label">Inhale (4s)</div>
+      </div>
+
       <div class="hero-number-group">
         <span id="hero-age-int" class="age-int">00</span>
         <span id="hero-age-dec" class="age-dec">.00000000</span>
@@ -44,10 +63,18 @@
       </div>
       <div class="hero-subtitle">years of life elapsed</div>
 
-      <!-- Integrated Life Tapestry -->
+      <!-- Snug Life Tapestry Matrix -->
       <div class="tapestry-frame">
         <canvas id="life-canvas"></canvas>
-        <div id="tapestry-tooltip" class="canvas-tooltip" hidden></div>
+        <div id="tapestry-tooltip" class="canvas-tooltip" hidden>
+          <div id="tooltip-main" class="tooltip-main"></div>
+          <div id="tooltip-era" class="tooltip-era"></div>
+        </div>
+      </div>
+
+      <!-- Daily Focus / Intent -->
+      <div class="daily-focus-wrap">
+        <input type="text" id="daily-focus-input" class="daily-focus-input" placeholder="What is your main focus for today?" maxlength="120" autocomplete="off" />
       </div>
     </main>
 

@@ -1,6 +1,8 @@
 import { Storage } from "./core/storage.js";
 import { LifespanModel } from "./core/lifespan.js";
 import { LifeMatrixRenderer } from "./visual/field.js";
+import { AmbientBackground } from "./visual/ambient.js";
+import { OdometerDisplay } from "./visual/odometer.js";
 
 const UI = {
   todayDateStr: document.getElementById("today-date-str"),
@@ -18,8 +20,19 @@ const UI = {
   pctLived: document.getElementById("stat-pct-lived"),
   horizonBar: document.getElementById("horizon-bar"),
 
+  // Ambient & Tapestry
+  ambientCanvas: document.getElementById("ambient-canvas"),
   canvas: document.getElementById("life-canvas"),
   tooltip: document.getElementById("tapestry-tooltip"),
+  tooltipMain: document.getElementById("tooltip-main"),
+  tooltipEra: document.getElementById("tooltip-era"),
+
+  // Daily Focus
+  dailyFocusInput: document.getElementById("daily-focus-input"),
+
+  // Zen 4-7-8 Breathing Guide
+  zenBreathContainer: document.getElementById("zen-breath-container"),
+  zenBreathLabel: document.getElementById("zen-breath-label"),
 
   // Search Bar
   searchInput: document.getElementById("search-input"),
@@ -35,9 +48,13 @@ const UI = {
 
 let model;
 let renderer;
+let ambient;
+let ageOdometer;
+let countdownOdometer;
 let idleTimer = null;
 let isZenMode = false;
 
+const FOCUS_KEY = "life_in_motion_daily_focus";
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -58,6 +75,32 @@ function init() {
   const lifeYrs = Storage.getExpectedLifespan();
 
   model = new LifespanModel(birthTs, lifeYrs);
+  
+  if (UI.ambientCanvas) {
+    ambient = new AmbientBackground(UI.ambientCanvas);
+  }
+  if (UI.heroInt) {
+    ageOdometer = new OdometerDisplay(UI.heroInt);
+  }
+  if (UI.todayCountdown) {
+    countdownOdometer = new OdometerDisplay(UI.todayCountdown);
+  }
+
+  // load saved daily priority
+  if (UI.dailyFocusInput) {
+    const saved = localStorage.getItem(FOCUS_KEY);
+    if (saved) UI.dailyFocusInput.value = saved;
+
+    UI.dailyFocusInput.addEventListener("input", (e) => {
+      localStorage.setItem(FOCUS_KEY, e.target.value);
+    });
+
+    UI.dailyFocusInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        UI.dailyFocusInput.blur();
+      }
+    });
+  }
 
   renderer = new LifeMatrixRenderer(UI.canvas, (hoverPoint) => {
     handleCanvasHover(hoverPoint);
@@ -74,7 +117,7 @@ function init() {
     saveSettings();
   });
 
-  // Hotkey listeners
+  // hotkeys: '/' = search, 'S' = settings, 'Z'/'B' = zen mode, 'Esc' = blur/close
   window.addEventListener("keydown", (e) => {
     const isInputActive = document.activeElement && 
       (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA");
@@ -87,23 +130,25 @@ function init() {
       }
     } else if ((e.key === "s" || e.key === "S") && !isInputActive) {
       if (UI.modal.hidden) showSettings();
-    } else if ((e.key === "z" || e.key === "Z") && !isInputActive) {
+    } else if ((e.key === "z" || e.key === "Z" || e.key === "b" || e.key === "B") && !isInputActive) {
       toggleZenMode();
     } else if (e.key === "Escape") {
-      if (document.activeElement === UI.searchInput) {
-        UI.searchInput.blur();
+      if (document.activeElement === UI.searchInput || document.activeElement === UI.dailyFocusInput) {
+        document.activeElement.blur();
       } else if (!UI.modal.hidden && Storage.getBirthTimestamp()) {
         hideSettings();
       }
     }
   });
 
-  // Idle awareness listeners
+  // idle awareness
   const resetIdleTimer = () => {
     document.body.classList.remove("idle-awareness");
     clearTimeout(idleTimer);
     idleTimer = setTimeout(() => {
-      if (!isZenMode && UI.modal.hidden && document.activeElement !== UI.searchInput) {
+      const isTyping = document.activeElement && 
+        (document.activeElement === UI.searchInput || document.activeElement === UI.dailyFocusInput);
+      if (!isZenMode && UI.modal.hidden && !isTyping) {
         document.body.classList.add("idle-awareness");
       }
     }, 15000);
@@ -128,9 +173,15 @@ function handleCanvasHover(pt) {
   }
 
   const status = pt.isNow ? "Present Week" : pt.isPast ? "Past Lived" : "Future Week";
-  UI.tooltip.textContent = `Age ${pt.ageYear} • Week ${pt.weekNum} (${status})`;
-
+  if (UI.tooltipMain) {
+    UI.tooltipMain.textContent = `Age ${pt.ageYear} • Week ${pt.weekNum} (${status})`;
+  }
+  if (UI.tooltipEra && pt.eraName) {
+    UI.tooltipEra.textContent = `${pt.eraName} • ${pt.eraDesc}`;
+  }
+  
   UI.tooltip.style.left = `${pt.x}px`;
+  UI.tooltip.style.transform = "translateX(-50%)";
   UI.tooltip.hidden = false;
 }
 
@@ -175,7 +226,7 @@ function formatCountdown(d) {
   const diffMs = Math.max(0, endOfDay - d);
 
   if (diffMs <= 1000) {
-    return "A day has passed. Tomorrow begins now.";
+    return "00:00:00";
   }
 
   const h = Math.floor(diffMs / 3600000).toString().padStart(2, "0");
@@ -194,20 +245,50 @@ function loop() {
   const now = new Date();
   const dateStr = `${MONTHS[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
 
+  // smooth background render
+  if (ambient) {
+    ambient.render();
+  }
+
+  // 4-7-8 breathing phase text sync (19s cycle)
+  if (isZenMode && UI.zenBreathLabel) {
+    const cycleSec = (now.getTime() % 19000) / 1000;
+    if (cycleSec < 4) {
+      UI.zenBreathLabel.textContent = "Inhale (4s)";
+    } else if (cycleSec < 11) {
+      UI.zenBreathLabel.textContent = "Hold (7s)";
+    } else {
+      UI.zenBreathLabel.textContent = "Exhale (8s)";
+    }
+  }
+
   // Header & Day Scale
   if (UI.todayDateStr) UI.todayDateStr.textContent = dateStr;
   if (UI.quoteDate) UI.quoteDate.textContent = dateStr;
-  if (UI.todayCountdown) UI.todayCountdown.textContent = formatCountdown(now);
+
+  const countdownText = formatCountdown(now);
+  if (countdownOdometer) {
+    countdownOdometer.set(countdownText);
+  } else if (UI.todayCountdown) {
+    UI.todayCountdown.textContent = countdownText;
+  }
 
   if (!model.birthTimestamp) return;
 
   const snapshot = model.getSnapshot(now.getTime());
   const { breakdown, expectedYears } = snapshot;
 
-  // Hero Age (Continuous decimal)
-  UI.heroInt.textContent = breakdown.years.toString();
+  // Hero Age
+  if (ageOdometer) {
+    ageOdometer.set(breakdown.years.toString());
+  } else if (UI.heroInt) {
+    UI.heroInt.textContent = breakdown.years.toString();
+  }
+
   const decStr = breakdown.fraction.toFixed(8).split(".")[1] || "00000000";
-  UI.heroDec.textContent = `.${decStr}`;
+  if (UI.heroDec) {
+    UI.heroDec.textContent = `.${decStr}`;
+  }
 
   // Tangible Finite Life Metrics
   const totalWeeks = expectedYears * 52;
@@ -233,7 +314,7 @@ function loop() {
   if (UI.pctLived) UI.pctLived.textContent = `${pctLived}%`;
   if (UI.horizonBar) UI.horizonBar.style.width = `${pctLived}%`;
 
-  // Render Tapestry
+  // Render Tapestry Canvas
   renderer.render(snapshot);
 }
 

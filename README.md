@@ -16,9 +16,9 @@
   * Contemplative 52-column canvas matrix spanning your lifespan.
   * Interactive reticle hover inspector detailing week index and age.
   * Decade markers (`0, 10, 20, 30...`) for spatial awareness.
-* **Zen Focus Mode & Idle Awareness**:
-  * Press `Z` to instantly enter Zen Mode, leaving only the hero age and life tapestry visible.
-  * Auto-fades telemetry after 15 seconds of idle inactivity to create a quiet ambient museum display.
+* **Zen Focus & 4-7-8 Breathing Mode**:
+  * Press `Z` or `B` to enter Zen Mode with an ethereal 4-7-8 breathing circle guiding deep grounding breaths behind the age counter.
+  * Auto-fades telemetry after 15 seconds of idle inactivity to create a quiet ambient display.
 * **100% Private & Offline**:
   * Stored strictly in `localStorage`. Zero analytics, tracking, or network requests.
 
@@ -28,9 +28,10 @@
 
 | Action | Control |
 | :--- | :--- |
-| **Zen Focus Mode** | Press `Z` |
+| **Zen & 4-7-8 Breathing Mode** | Press `Z` or `B` |
+| **Focus Search Bar** | Press `/` |
 | **Settings / Calibration** | Press `S` or click `·` |
-| **Close Dialogs** | Press `Esc` |
+| **Close Dialogs / Unfocus** | Press `Esc` |
 
 ---
 
